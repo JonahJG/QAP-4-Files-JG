@@ -1,5 +1,5 @@
 # Program to create a graph to show the amounts of claims per month
-# Author: Jonah Greening              Date:
+# Author: Jonah Greening              Date: Nov 28, 2022
 
 import matplotlib.pyplot as plt
 
