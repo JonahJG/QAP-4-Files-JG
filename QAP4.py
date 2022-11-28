@@ -22,13 +22,14 @@ while True:
 
     while True:
         CusFName = input("Enter the customer's first name: ").title()
-
         if CusFName == "":
             print("The customer's first name cannot be blank. Please re-enter.")
         elif CusFName.isalpha() == False:
             print("Invalid characters in customer's first name. Please re-enter")
         else:
             break
+
+
 
     while True:
 
@@ -44,7 +45,7 @@ while True:
     StAdd = input("Enter the customer's street address: ")
     City = input("Enter the customer's city: ")
     Prov = input("Enter the customer's province: ")
-    PostCode = input("Enter the customer's postal code: ")
+    PostCode = input("Enter the customer's postal code: ").upper()
     PhoneNum = input("Enter the customer's phone number (##########): ")
     NumCars = int(input("Enter the number of cars on the policy: "))
 
@@ -102,7 +103,7 @@ while True:
     TotalCost = TotalPremium + HST
     MonthPay = (TotalPremium + PROC_FEE_MON_PAY) / 8
     POLICY_DATE = datetime.datetime.now()
-    POLICY_DATE = str(datetime.datetime.strftime(POLICY_DATE, "%Y-%d-%m"))
+
 
 
     while True:
@@ -120,36 +121,33 @@ while True:
 
     CusName = CusFName + " " + CusLName
     print()
-    print("        One Stop Insurance Company")
-    print("-------------------------------------------")
-    print(f"Policy number: {NEXT_POLICY_NUM:<4d}-{CusFName[0]}{CusLName[0]}    Policy date: {POLICY_DATE}")
+    print("            One Stop Insurance Company")
+    print("--------------------------------------------------")
+    print(f"Policy number: {NEXT_POLICY_NUM:<4d}-{CusFName[0]}{CusLName[0]}    Policy date: {FV.FDateS(POLICY_DATE)}")
     print()
-    print("Customer details:                    Phone:")
-    print(f"{CusName:<15s}                  {PhoneNum:<10s}")
+    print("Customer details:                      Phone:")
+    print(f"{CusName:<15s}                        {PhoneNum:<10s}")
     print(f"{StAdd}")
     print(f"{City}, {Prov} {PostCode} ")
-    print("-------------------------------------------")
-    print(f"Number of cars on policy:                 {NumCars:>1d}")
-    print(f"Extra liability:                          {ExtraLiability:>1s}")
-    print(f"Glass coverage:                           {Glass:>1s}")
-    print(f"Loaner car:                               {LoanerCar:>1s}")
-    print(f"Payment option:                           {FullOrMon:>1s}")
-    print("                                  ---------")
-    print(f"Premium cost:                     {FV.FDollar2(Premium):>9s}")
-    print(f"Extra costs:                      {FV.FDollar2(TotalExtraCosts):>9s}")
-    print(f"Total premium cost:               {FV.FDollar2(TotalPremium):>9s}")
-    print("                                  ----------")
-    print(f"HST:                              {FV.FDollar2(HST):>9s}")
-    print(f"Total cost:                       {FV.FDollar2(TotalCost):>9s}")
-    print("                                  ----------")
+    print("--------------------------------------------------")
+    print(f"Number of cars on policy:                       {NumCars:>1d}")
+    print(f"Extra liability:                                {ExtraLiability:>1s}")
+    print(f"Glass coverage:                                 {Glass:>1s}")
+    print(f"Loaner car:                                     {LoanerCar:>1s}")
+    print(f"Payment option:                                 {FullOrMon:>1s}")
+    print("                                         ----------")
+    print(f"Premium cost:                            {FV.FDollar2(Premium):>9s}")
+    print(f"Extra costs:                             {FV.FDollar2(TotalExtraCosts):>9s}")
+    print(f"Total premium cost:                      {FV.FDollar2(TotalPremium):>9s}")
+    print("                                         ----------")
+    print(f"HST:                                     {FV.FDollar2(HST):>9s}")
+    print(f"Total cost:                              {FV.FDollar2(TotalCost):>9s}")
+    print("                                         ----------")
     if FullOrMon == "M":
-        print(f"Monthly payment:                  {FV.FDollar2(MonthPay):>9s}")
-    print("--------------------------------------------")
+        print(f"Monthly payment:                         {FV.FDollar2(MonthPay):>9s}")
+    print("---------------------------------------------------")
     print()
 
-    Cont = input("Would you like to make another claim?")
-    if Cont == "N":
-        break
 
     f = open("Policies.dat", "a")
 
@@ -164,13 +162,32 @@ while True:
     f.write("{}, ".format(Glass))
     f.write("{}, ".format(LoanerCar))
     f.write("{}, ".format(FullOrMon))
-    f.write("{}\n".format(str(TotalCost)))
+    f.write("{}\n".format(str(TotalPremium)))
     f.close()
 
-    print()
-    print("Conference information successfully saved.")
-
     NEXT_POLICY_NUM += 1
+
+    Cont = input("Would you like to make another claim? (Y/N): ").upper()
+    if Cont == "N":
+        break
+    print()
+    print("Policy information processed and saved.")
+
+
+    f = open("OSICDef.dat", "w")
+
+    f.write("{}\n".format(str(NEXT_POLICY_NUM)))
+    f.write("{}\n".format(FV.FDateS(POLICY_DATE)))
+    f.write("{}\n".format(str(BASE_RATE)))
+    f.write("{}\n".format(str(ADD_CAR_DISC)))
+    f.write("{}\n".format(str(EXTRA_LIABILITY)))
+    f.write("{}\n".format(str(GLASS_COVER)))
+    f.write("{}\n".format(str(LOANER_CAR)))
+    f.write("{}\n".format(str(HST_RATE)))
+    f.write("{}\n".format(str(PROC_FEE_MON_PAY)))
+
+    f.close()
+
 
 
 
