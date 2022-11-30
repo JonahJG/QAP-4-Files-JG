@@ -1,5 +1,5 @@
 # QAP 4. One Step Insurance Comapny, a program to enter and calculate new insurace policy information
-# Author: Jonah Greening                        Date: Nov 28, 2022
+# Author: Jonah Greening                        Date:
 
 import Validate as V
 import FormatValues as FV
@@ -110,7 +110,11 @@ while True:
         elif ExtraLiability == "Y":
             Discount = (BASE_RATE * ADD_CAR_DISC) * int(NumCars)
             ExtraLiabRate = (int(NumCars) * EXTRA_LIABILITY)
-            break
+            if ExtraLiabRate > 1000000:
+                print("Extra liability cannot exceed $1,000,000. Please re-enter.")
+            else:
+                break
+
         else:
             Discount = 0
             ExtraLiabRate = 0
@@ -237,4 +241,5 @@ while True:
     f.write("{}\n".format(str(PROC_FEE_MON_PAY)))
 
     f.close()
+
 
