@@ -1,5 +1,5 @@
 # QAP 4. One Step Insurance Comapny, a program to enter and calculate new insurace policy information
-# Author: Jonah Greening                        Date:
+# Author: Jonah Greening                        Date: Nov 30, 2022
 
 import Validate as V
 import FormatValues as FV
